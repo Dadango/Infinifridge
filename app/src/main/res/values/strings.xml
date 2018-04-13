@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Infinifridge</string>
     <string name="add_new">Add New</string>
+    <string name="EntryName" />
+    <string name="EntryImageDesc">This is where the magic happens</string>
+    <string name="Name">name</string>
+    <string name="Amount">1</string>
 </resources>

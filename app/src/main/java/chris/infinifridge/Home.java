@@ -1,9 +1,8 @@
 package chris.infinifridge;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 public class Home extends AppCompatActivity {
@@ -16,8 +15,6 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Entries shrimp = new Entries();
-        Log.println(Log.INFO,"expirationD", shrimp.setExpirationDate());
 
     }
 

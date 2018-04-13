@@ -5,21 +5,20 @@ import java.util.Date;
 public class Entries {
     int[] border_c = new int[3];
     String name = "Custom entry";
-    String expirationDate = "the date lol";
+    String location;
     Date currentDate = new Date();
 
-    public String setExpirationDate() {
+    public void Entries(String name){
+        this.name = name;
+        }
+
+    public String setExpirationDate(int dayN, int monthN, int yearN) {
         long dayT = (1000l * 60l * 60l * 24l);
         long thisYear = (48l * 365l * dayT) + (12l * dayT); //Jan 01 2018
         currentDate.setTime(thisYear);
 
-        int dayN = 1;
-
-        int monthN = 1;
         int mFixN = 31;
         int mFix2 = 0;
-
-        int yearN = 2018;
 
         if (monthN < 5 && monthN > 2) {
             mFix2 = 3;

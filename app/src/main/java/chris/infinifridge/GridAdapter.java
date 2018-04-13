@@ -1,9 +1,7 @@
 package chris.infinifridge;
 
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +19,6 @@ public class GridAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
 
     public GridAdapter(AddActivity mainActivity, String[] entryName, int[] entryImages) {
-        // TODO Auto-generated constructor stub
         result = entryName;
         context = mainActivity;
         imageId = entryImages;
@@ -30,21 +27,18 @@ public class GridAdapter extends BaseAdapter {
 
     }
 
-    @Override
+    //    @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return result.length;
     }
 
-    @Override
+    //@Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
-    @Override
+    //  @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -53,16 +47,14 @@ public class GridAdapter extends BaseAdapter {
         ImageView os_img;
     }
 
-    @Override
+    //    @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         Holder holder = new Holder();
         View rowView;
 
-        rowView = inflater.inflate(R.layout.add_activity, null);
-        holder.os_text = (TextView) rowView.findViewById(AddActivity.entryNames.length);//fix
-        holder.os_img = (ImageView) rowView.findViewById(AddActivity.entryImages.length); //fix
-
+        rowView = inflater.inflate(R.layout.grid_layout, null);
+        holder.os_text = rowView.findViewById(R.id.os_texts);
+        holder.os_img = rowView.findViewById(R.id.os_images);
         holder.os_text.setText(result[position]);
         holder.os_img.setImageResource(imageId[position]);
 
@@ -70,11 +62,17 @@ public class GridAdapter extends BaseAdapter {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+                AddActivity.entry = result[position];
+                onClickE(result[position]);
                 Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_SHORT).show();
             }
         });
 
         return rowView;
+    }
+    public void onClickE(String name){
+        DescriptionOverlay.phName = name;
+        Intent intent = new Intent(context,AddActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }
