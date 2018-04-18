@@ -3,16 +3,36 @@ package chris.infinifridge;
 import java.util.Date;
 
 public class Entries {
-    int[] border_c = new int[3];
     String name = "Custom entry";
-    String location;
+    int imageId = 0;
+    int amount = 1;
+    int amountType = 0;
+    int storage = 0;
+    int[] expirationDate = new int[3];
     Date currentDate = new Date();
 
-    public void Entries(String name){
+    public Entries(){
         this.name = name;
+    }
+    public Entries(String name, int imageId, int amount, int amountType, int storage){
+        this.name = name;
+        this.imageId = imageId;
+        this.amount = amount;
+        this.amountType = amountType;
+        this.storage = storage;
         }
 
-    public String setExpirationDate(int dayN, int monthN, int yearN) {
+    public Entries(String name, int imageId, int amount, int amountType, int storage, int[] expirationDate){
+        this.name = name;
+        this.imageId = imageId;
+        this.amount = amount;
+        this.amountType = amountType;
+        this.storage = storage;
+        this.expirationDate = expirationDate;
+    }
+
+/*
+    public String setExpirationDate(int dayN, int monthN, int yearN) { // we didn't need this anyway.
         long dayT = (1000l * 60l * 60l * 24l);
         long thisYear = (48l * 365l * dayT) + (12l * dayT); //Jan 01 2018
         currentDate.setTime(thisYear);
@@ -35,5 +55,5 @@ public class Entries {
         currentDate.setTime(dateN); //dateN
 
         return currentDate.toString().substring(4).replace("00:00:00 GMT+00:00 ", "");
-    }
+    }*/
 }

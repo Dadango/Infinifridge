@@ -65,7 +65,6 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void descriptionOverlay() {
-
         Intent intent = new Intent(this, DescriptionOverlay.class);
         startActivity(intent);
     }

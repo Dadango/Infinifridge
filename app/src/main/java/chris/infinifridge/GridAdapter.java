@@ -16,6 +16,7 @@ public class GridAdapter extends BaseAdapter {
     String[] result;
     Context context;
     int[] imageId;
+    boolean addOrEdit; //false = edit
     private static LayoutInflater inflater = null;
 
     public GridAdapter(AddActivity mainActivity, String[] entryName, int[] entryImages) {
@@ -24,7 +25,17 @@ public class GridAdapter extends BaseAdapter {
         imageId = entryImages;
         inflater = (LayoutInflater) context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        addOrEdit = true;
 
+    }
+
+    public GridAdapter(Home mainActivity, String[] entryName, int[] entryImages) {
+        result = entryName;
+        context = mainActivity;
+        imageId = entryImages;
+        inflater = (LayoutInflater) context.
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        addOrEdit = false;
     }
 
     //    @Override
@@ -63,16 +74,23 @@ public class GridAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 AddActivity.entry = result[position];
-                onClickE(result[position]);
+                onClickE(result[position], imageId[position], position);
                 Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_SHORT).show();
             }
         });
 
         return rowView;
     }
-    public void onClickE(String name){
+
+    public void onClickE(String name, int imageId, int position) {
         DescriptionOverlay.phName = name;
-        Intent intent = new Intent(context,AddActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        DescriptionOverlay.imageId = imageId;
+        DescriptionOverlay.position = position;
+        DescriptionOverlay.addOrEdit2 = addOrEdit;
+        if (addOrEdit == false) {
+            DescriptionOverlay.ph = (Entries)Home.myEntries.get(position);
+        }
+        Intent intent = new Intent(context, AddActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 }

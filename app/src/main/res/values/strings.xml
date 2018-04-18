@@ -5,4 +5,8 @@
     <string name="EntryImageDesc">This is where the magic happens</string>
     <string name="Name">name</string>
     <string name="Amount">1</string>
+    <string name="ExpirationDay">dd</string>
+    <string name="ExpirationMonth">mm</string>
+    <string name="ExpirationYear">yyyy</string>
+
 </resources>
