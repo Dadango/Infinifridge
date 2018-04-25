@@ -8,5 +8,5 @@
     <string name="ExpirationDay">dd</string>
     <string name="ExpirationMonth">mm</string>
     <string name="ExpirationYear">yyyy</string>
-
+    <string name="search"></string>
 </resources>

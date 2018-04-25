@@ -1,5 +1,7 @@
 package chris.infinifridge;
 
+import android.util.Log;
+
 import java.util.Date;
 
 public class Entries {
@@ -9,7 +11,6 @@ public class Entries {
     int amountType = 0;
     int storage = 0;
     int[] expirationDate = new int[3];
-    Date currentDate = new Date();
 
     public Entries(){
         this.name = name;
@@ -31,11 +32,22 @@ public class Entries {
         this.expirationDate = expirationDate;
     }
 
-/*
-    public String setExpirationDate(int dayN, int monthN, int yearN) { // we didn't need this anyway.
-        long dayT = (1000l * 60l * 60l * 24l);
-        long thisYear = (48l * 365l * dayT) + (12l * dayT); //Jan 01 2018
-        currentDate.setTime(thisYear);
+
+    public boolean amIExpiringSoon(){
+        Date currentDate = new Date();
+        currentDate.setTime(currentDate.getTime()-(60L*60L*100L));
+        long dayT = (1000L * 60L * 60L * 24L);
+        getExpirationDate(expirationDate[0],expirationDate[1],expirationDate[2]);
+
+        if (this.expirationDate[0] != 0 && this.expirationDate[1] != 0 && this.expirationDate[2] != 0){
+            Log.i("WHAT",getExpirationDate(this.expirationDate[0],this.expirationDate[1],this.expirationDate[2])+"");
+            return getExpirationDate(this.expirationDate[0], this.expirationDate[1], this.expirationDate[2]) - 2 * dayT <= currentDate.getTime();
+        }
+        return false;
+    }
+    public long getExpirationDate(int dayN, int monthN, int yearN) {
+        long dayT = (1000L * 60L * 60L * 24L);
+        long thisYear = (48L * 365L * dayT) + (12L * dayT); //Jan 01 2018
 
         int mFixN = 31;
         int mFix2 = 0;
@@ -52,8 +64,8 @@ public class Entries {
             mFix2 = 7;
         }
         long dateN = ((dayN - 1) * dayT) + ((monthN - 1) * dayT * mFixN - (mFix2 * dayT)) + ((yearN - 1970) * dayT * 365l) + (12l * dayT);
-        currentDate.setTime(dateN); //dateN
-
-        return currentDate.toString().substring(4).replace("00:00:00 GMT+00:00 ", "");
-    }*/
+        //currentDate.setTime(dateN); //dateN
+       // currentDate.toString().substring(4).replace("00:00:00 GMT+00:00 ", "")
+        return dateN;
+    }
 }

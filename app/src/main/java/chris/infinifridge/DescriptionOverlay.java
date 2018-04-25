@@ -1,5 +1,6 @@
 package chris.infinifridge;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -33,7 +34,7 @@ public class DescriptionOverlay extends AppCompatActivity implements AdapterView
         super.onResume();
         if (addOrEdit2) {
             findViewById(R.id.bt_Delete).setVisibility(View.GONE);
-        }else{
+        } else {
             findViewById(R.id.bt_Delete).setVisibility(View.VISIBLE);
         }
         TextView name = findViewById(R.id.textView);
@@ -104,12 +105,20 @@ public class DescriptionOverlay extends AppCompatActivity implements AdapterView
     public void onClickCancel(View view) {
         ph = new Entries();
         super.onBackPressed();
+        if (addOrEdit2) {
+            Intent intent = new Intent(this, AddActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void onClickDelete(View view) {
         ph = new Entries();
         Home.myEntries.remove(position);
         super.onBackPressed();
+        if (addOrEdit2) {
+            Intent intent = new Intent(this, AddActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void onClickSave(View view) {
@@ -153,9 +162,22 @@ public class DescriptionOverlay extends AppCompatActivity implements AdapterView
         super.onBackPressed();
         if (addOrEdit2 && iALreadyDid == false) {
             Home.myEntries.add(new Entries(iname, imageId, amount, amountType, storage, expirationDate));
-        } else if(addOrEdit2 == false && iALreadyDid == false) {
-            Log.i("Do you run you fat fuck","Yes");
+        } else if (addOrEdit2 == false && iALreadyDid == false) {
+            Log.i("Do you run you fat fuck", "Yes");
             Home.myEntries.set(position, new Entries(iname, imageId, amount, amountType, storage, expirationDate));
+        }
+        if (addOrEdit2) {
+            Intent intent = new Intent(this, AddActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (addOrEdit2) {
+            Intent intent = new Intent(this, AddActivity.class);
+            startActivity(intent);
         }
     }
 }
