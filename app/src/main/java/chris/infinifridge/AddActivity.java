@@ -3,10 +3,13 @@ package chris.infinifridge;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -36,6 +39,12 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.add_activity);                                                      //Inflates the layout of addActivity to the xml file add_Activity
         GridView gridView = findViewById(R.id.gridView);                                            //Finds a certain gridview dependent on its ID which is found via "findViewById"
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        // enables up button in actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         try {                                                                                       //Exception handling for IllegalAccessException
             updateEntries();                                                                        //Calling the updateEntries method after setting the gridview
         } catch (IllegalAccessException e) {
@@ -45,6 +54,17 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    // finishes the current activity and starts (or resumes) the appropriate parent activity
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onResume() {
@@ -110,14 +130,14 @@ public class AddActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
                     tv.setVisibility(View.GONE);
-                }else {
+                } else {
                     tv.setText(stv.getText());
                     testString = tv.getText().toString();
                 }
             }
         };
         stv.addTextChangedListener(watchDogs2);
-        Log.i("please", testString +"");
+        Log.i("please", testString + "");
 
 
         return entryName.equalsIgnoreCase(testString + "");
@@ -133,7 +153,7 @@ public class AddActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         AddActivity.this.finish();                                                                  //When addActivity is put on pause it will finish its activity, which means the window will close
-                                                                                                    //So you do not get multiple AddActivity activities open at the same time
+        //So you do not get multiple AddActivity activities open at the same time
 
     }
 }
