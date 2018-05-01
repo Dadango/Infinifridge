@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class AddActivity extends AppCompatActivity {
     public static String entry = null;                                                              //Initializes a new String variable called entry with the value null
     // final AssetManager assetManager = getBaseContext().getAssets();
-    private static int fixinator2000 = 3; //int equals amount of icons after entries
+    private static int fixinator2000 = 3;                                                           //int equals amount of icons after entries in res/mipmap
 
     private static Field[] ID_Fields = R.mipmap.class.getFields();                                  //Initializes a new Field array called ID_Fields with the values from R.mipmap
     private static int[] resArray = new int[ID_Fields.length];                                      //Initializes a new integer array called resArray with the length of ID_fields

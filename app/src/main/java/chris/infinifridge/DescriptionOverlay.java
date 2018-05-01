@@ -15,39 +15,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DescriptionOverlay extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    static Entries ph = new Entries();                                                              //Initializes a new object ph with the type Entries
-    static int imageId = 0;                                                                         //Initializes a new integer variable imageID with the value 0
-    static String phName = "";                                                                      //Initializes a new String variable phName with the value blank
-    static boolean addOrEdit2;                                                                      //Declaring a new boolean variable addOrEdit2
-    static int position;                                                                            //Declaring a new integer variable position
+    static Entries ph = new Entries();                                                              //Declares and initializes a new object ph with the type Entries
+    static int imageId = 0;                                                                         //Declares and initializes a new integer variable imageID with the value 0
+    static String phName = "";                                                                      //Declares and initializes a new String variable phName with the value of a blank String
+    static boolean addOrEdit2;                                                                      //Declares a new boolean variable addOrEdit2
+    static int position;                                                                            //Declares a new integer variable position
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description_overlay);                                      //Inflates the layout of DescriptionOverlay to the activity_description_overlay xml file
-        ph.name = phName;                                                                           //Assigns the value of ph.name to phName
-        ph.imageId = imageId;                                                                       //Assigns the value of ph.imageID to imageId
+        ph.name = phName;                                                                           //Assigns the value of the ph object's variable "name" to "phName"
+        ph.imageId = imageId;                                                                       //Assigns the value of the ph object's variable "imageID" to "imageId"
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (addOrEdit2) {                                                                           //If statement dependent on the value of addOrEdit2
+        if (addOrEdit2) {                                                                           //If statement checking if addOrEdit2 (boolean variable) is true, meaning that the user is adding a new entry
             findViewById(R.id.bt_Delete).setVisibility(View.GONE);                                  //Sets the delete button to GONE if the statement is true
         } else {
             findViewById(R.id.bt_Delete).setVisibility(View.VISIBLE);                               //Sets the delete button to VISIBLE if the statement is false
         }
-        TextView name = findViewById(R.id.textView);                                                //Make a new TextView variable with the name "name" and set its ID to textView
-        name.setText(ph.name);                                                                      //Sets the text of the name Textview to whatever the value of ph.name is
-        TextView ename = findViewById(R.id.editTextName);                                           //Make a new TextView variable with the name "ename" and set its id to the editTextName id
-        ename.setText(ph.name);                                                                     //Sets the text of the ename TextView to whatever the value of ph.name is
-        TextView amount = findViewById(R.id.editTextAmount);                                        //Make a new TextView variable with the name "amount" and set its id to editTextAmount id
-        amount.setText(ph.amount + "");                                                             //Sets the text of the amount TextView to whatever the value of ph.amount is
-        ImageView image = findViewById(R.id.imageView);                                             //Make a new imageView variable with the name "image" and set its id to imageView id
-        image.setImageResource(ph.imageId);                                                         //Sets the image of the imageView to the value of ph.imageId
-        Spinner amountT = findViewById(R.id.spinner);                                               //Make a new spinner with the name amountT and set its id to spinner's id
+        TextView name = findViewById(R.id.textView);                                                //Declares and initializes a TextView (called "name"), found via the id of "textView" from the Content view
+
+        name.setText(ph.name);                                                                      //Sets the text of "name" (Textview) to the value of ph.name
+        TextView ename = findViewById(R.id.editTextName);                                           //Declares and initializes a TextView (called "ename"), found via the id of "editTextName" from the Content view
+        ename.setText(ph.name);                                                                     //Sets the text of the ename TextView to the value of ph.name
+        TextView amount = findViewById(R.id.editTextAmount);                                        //Declares and initializes a TextView (called "amount"), found via the id of "editTextAmount" from the Content view
+        amount.setText(ph.amount + "");                                                             //Sets the text of the amount TextView to the value of ph.amount
+        ImageView image = findViewById(R.id.imageView);                                             //Declares and initializes an ImageView (called "image"), found via the id of "imageView" from the Content view
+        image.setImageResource(ph.imageId);                                                         //Sets the image of the imageView using the value of ph.imageId as its image resource
+        Spinner amountT = findViewById(R.id.spinner);                                               //Declares and initializes a spinner (called "amountT"), found via the id of "spinner" from the Content view
         amountT.setOnItemSelectedListener(this);                                                    //Creates a listener for the spinner amountT to be able to see what the user has selected on the spinner
-        List<String> list = new ArrayList<String>();                                                //Creates a new string Arraylist called list
+        List<String> list = new ArrayList<String>();                                                     //Creates a new string Arraylist called list
         list.add("kg");                                                                             //line 51-55 add new items to the spinner
         list.add("pack(s)");
         list.add("g");
@@ -61,7 +62,7 @@ public class DescriptionOverlay extends AppCompatActivity implements AdapterView
 
         Spinner sLocation = findViewById(R.id.spinner3);                                            //Makes a spinner with the name sLocation and sets it id to spinner3
         sLocation.setOnItemSelectedListener(this);                                                  //Creates a listener for the spinner sLocation to be able to see what the user has selected
-        List<String> list3 = new ArrayList<String>();                                               //Creates a new string Arraylist called list3
+        List<String> list3 = new ArrayList<String>();                                                    //Creates a new string Arraylist called list3
         list3.add("Fridge");                                                                        //line 65-58 add new items to the spinner
         list3.add("Freezer");
         list3.add("Cupboards");
@@ -160,22 +161,22 @@ public class DescriptionOverlay extends AppCompatActivity implements AdapterView
             }
         }
         super.onBackPressed();                                                                      //Imported method from super class onBackPressed, that makes it go back to previous activity when pressing back
-        if (addOrEdit2 && iAlreadyDid == false) {                                                   //Unsure if line 156-160 or 163-168 are adding or editing
-            Home.myEntries.add(new Entries(iname, imageId, amount, amountType, storage, expirationDate)); //Unsure about the rest actually
-        } else if (addOrEdit2 == false && iAlreadyDid == false) {
-            Log.i("Do you run you fat fuck", "Yes");
-            Home.myEntries.set(position, new Entries(iname, imageId, amount, amountType, storage, expirationDate));
+        if (addOrEdit2 && iAlreadyDid == false) {                                                   //checks if user is adding and if the program has already added the entry (without an expiration date)
+            Home.myEntries.add(new Entries(iname, imageId, amount, amountType, storage, expirationDate)); //adds a new Entries object to myEntries in home with the values of iname, imageID, amount, amountType and storage
+        } else if (addOrEdit2 == false && iAlreadyDid == false) {                                   //checks if the user is editing and if the problem has already added the entry (without and expiration date)
+            Log.i("Do you run you fat fuck", "Yes");                                      //checks if the program runs this line of code for the purpose of development. Can be safely ignored
+            Home.myEntries.set(position, new Entries(iname, imageId, amount, amountType, storage, expirationDate)); ///will set new values of iname, imageID, amount, amountType and storage in the selected entry in the home class if the user changes them
         }
-        if (addOrEdit2) {
+        if (addOrEdit2) {                                                                           //if the user is adding a new entry, it will revert to the addActivity, so the user can more easily add another if needed
             Intent intent = new Intent(this, AddActivity.class);
             startActivity(intent);
         }
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (addOrEdit2) {
+    public void onBackPressed() {                                                                   //Method that runs when the Android back button is pressed
+        super.onBackPressed();                                                                      //As this method overrides the default, but should still run the regular code, with our additions, we run super.onBackPressed()
+        if (addOrEdit2) {                                                                           //if the user is adding a new entry, it will revert to the addActivity, so the user can more easily add another if needed
             Intent intent = new Intent(this, AddActivity.class);
             startActivity(intent);
         }
