@@ -16,32 +16,32 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class AddActivity extends AppCompatActivity {
-    public static String entry = null;
+    public static String entry = null;                                                              //Initializes a new String variable called entry with the value null
     // final AssetManager assetManager = getBaseContext().getAssets();
     private static int fixinator2000 = 3; //int equals amount of icons after entries
 
-    private static Field[] ID_Fields = R.mipmap.class.getFields();
-    private static int[] resArray = new int[ID_Fields.length];
+    private static Field[] ID_Fields = R.mipmap.class.getFields();                                  //Initializes a new Field array called ID_Fields with the values from R.mipmap
+    private static int[] resArray = new int[ID_Fields.length];                                      //Initializes a new integer array called resArray with the length of ID_fields
 
-    public static String[] entryNames = new String[ID_Fields.length - fixinator2000];
-    public static int[] entryImages = new int[ID_Fields.length - fixinator2000];
+    public static String[] entryNames = new String[ID_Fields.length - fixinator2000];               //Initializes a new string array called entryNames with the length of ID_fields minus fixinator(3)
+    public static int[] entryImages = new int[ID_Fields.length - fixinator2000];                    //Initializes a new integear array called entryImages with the length of ID_fields minus fixinator(3)
 
-    EditText stv;
-    TextView tv;
-    String testString;
+    EditText stv;                                                                                   //Declaring variable stv with the type EditText
+    TextView tv;                                                                                    //Declaring variable tv with the type TextView
+    String testString;                                                                              //Declaring variable testString with the type String
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_activity);
-        GridView gridView = findViewById(R.id.gridView);
+        setContentView(R.layout.add_activity);                                                      //Inflates the layout of addActivity to the xml file add_Activity
+        GridView gridView = findViewById(R.id.gridView);                                            //Finds a certain gridview dependent on its ID which is found via "findViewById"
 
-        try {
-            updateEntries();
+        try {                                                                                       //Exception handling for IllegalAccessException
+            updateEntries();                                                                        //Calling the updateEntries method after setting the gridview
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        gridView.setAdapter(new GridAdapter(this, entryNames, entryImages));
+        gridView.setAdapter(new GridAdapter(this, entryNames, entryImages));              //Sets the gridview to Gridadapter with the values of entryNames and entryImages
 
     }
 
@@ -49,25 +49,25 @@ public class AddActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        for (int i = 0; i < ID_Fields.length - fixinator2000; i++) {
-            try {
-                resArray[i] = ID_Fields[i].getInt(null);
+        //from line 52-67, unsure
+        for (int i = 0; i < ID_Fields.length - fixinator2000; i++) {                                //For loop that keeps running till it reaches the length of ID_Fields minus fixinator(3)
+            try {                                                                                   //Exception handling for Illegal argument and access exception
+                resArray[i] = ID_Fields[i].getInt(null);                                        //Assigns the value of ID_fields to resArray for each iteration of i
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        if (entry != null) {
-            entry = null;
+        if (entry != null) {                                                                        //Runs if statement if entry is not null
+            entry = null;                                                                           //Sets entry variable to null
             Log.i("fuck", "entry is now null");
-            descriptionOverlay();
+            descriptionOverlay();                                                                   //calls the descriptionOverlay method
         }
     }
 
 
-    public void updateEntries() throws IllegalAccessException { //remember to call me after popup EDIT thing
+    public void updateEntries() throws IllegalAccessException { //remember to call me after popup EDIT thing - Creating new method that throws IllegalAccessException as exception handling
         for (int i = 0; i < entryNames.length; i++) {
             String name = ID_Fields[i].getName().replace("entry_", "");
             entryNames[i] = name.substring(0, 1).toUpperCase() + name.substring(1);
@@ -124,15 +124,16 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    public void descriptionOverlay() {
-        Intent intent = new Intent(this, DescriptionOverlay.class);
-        startActivity(intent);
+    public void descriptionOverlay() {                                                              //Method to start a new activity
+        Intent intent = new Intent(this, DescriptionOverlay.class);                    //Creates a new intent with the intent going from this activity to DescriptionOverlay activity
+        startActivity(intent);                                                                      //Starts the activity with the intent
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        AddActivity.this.finish();
+        AddActivity.this.finish();                                                                  //When addActivity is put on pause it will finish its activity, which means the window will close
+                                                                                                    //So you do not get multiple AddActivity activities open at the same time
 
     }
 }
