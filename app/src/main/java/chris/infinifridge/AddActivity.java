@@ -1,8 +1,6 @@
 package chris.infinifridge;
 
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -15,12 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -34,15 +28,15 @@ public class AddActivity extends AppCompatActivity {
 
     public static String[] entryNames = new String[ID_Fields.length - fixinator2000];               //Initializes a new string array called entryNames with the length of ID_fields minus fixinator(3)
     public static int[] entryImages = new int[ID_Fields.length - fixinator2000];                    //Initializes a new integear array called entryImages with the length of ID_fields minus fixinator(3)
-    public static String please;
-    GridView gridView;
+
+    EditText stv;                                                                                   //Declaring variable stv with the type EditText
+    TextView tv;                                                                                    //Declaring variable tv with the type TextView
+    String testString;                                                                              //Declaring variable testString with the type String
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_activity);                                                      //Inflates the layout of addActivity to the xml file add_Activity
-        gridView = findViewById(R.id.gridView);                                                      //Finds a certain gridview dependent on its ID which is found via "findViewById"
-        gridView.setAdapter(new GridAdapter(this, entryNames, entryImages));              //Sets the gridview to Gridadapter with the values of entryNames and entryImages
         GridView gridView = findViewById(R.id.gridView);                                            //Finds a certain gridview dependent on its ID which is found via "findViewById"
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -56,6 +50,8 @@ public class AddActivity extends AppCompatActivity {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        gridView.setAdapter(new GridAdapter(this, entryNames, entryImages));              //Sets the gridview to Gridadapter with the values of entryNames and entryImages
+
     }
 
     // finishes the current activity and starts (or resumes) the appropriate parent activity
@@ -85,6 +81,7 @@ public class AddActivity extends AppCompatActivity {
         }
         if (entry != null) {                                                                        //Runs if statement if entry is not null
             entry = null;                                                                           //Sets entry variable to null
+            Log.i("fuck", "entry is now null");
             descriptionOverlay();                                                                   //calls the descriptionOverlay method
         }
     }
@@ -96,28 +93,28 @@ public class AddActivity extends AppCompatActivity {
             entryNames[i] = name.substring(0, 1).toUpperCase() + name.substring(1);
             entryImages[i] = ID_Fields[i].getInt(null);
         }
-        ArrayList<String> entryNamesTemp = new ArrayList();
-        ArrayList<Integer> entryImagesTemp = new ArrayList();
+        ArrayList entryNamesTemp = new ArrayList();
+        ArrayList entryImageTemp = new ArrayList();
         for (int i = 0; i < entryNames.length; i++) {
             if (filter(entryNames[i])) { //if entry should be filtered out
                 entryNamesTemp.add(entryNames[i]);
-                entryImagesTemp.add(entryImages[i]);
+                entryImageTemp.add(entryImages[i]);
             }
         }
-        String[] entryNameTemp = new String[entryNamesTemp.size()];
-        int[] entryImageTemp = new int[entryImagesTemp.size()];
-        for (int i = 0; i < entryImagesTemp.size(); i++) {
-            entryNameTemp[i] = entryNamesTemp.get(i);
-            entryImageTemp[i] = entryImagesTemp.get(i);
+        String[] ent = new String[entryNamesTemp.size()];
+        int[] eit = new int[entryImageTemp.size()];
+        for (int i = 0; i < entryNamesTemp.size(); i++) {
+            ent[i] = (String) entryNamesTemp.get(i);
+            eit[i] = (int) entryImageTemp.get(i);
         }
-        gridView.setAdapter(new GridAdapter(this, entryNameTemp, entryImageTemp));              //Changes the display to the new temporary values, to only show the filtered results
+        entryNames = ent;
+        entryImages = eit;
     }
 
     public boolean filter(String entryName) {
-        EditText stv = findViewById(R.id.search_field);
-        final String[] testString = {""};
-        // stv.setText(""); this breaks everything
-
+        stv = findViewById(R.id.search_field);
+        tv = findViewById(R.id.tV);
+        tv.setVisibility(View.GONE);
         final TextWatcher watchDogs2 = new TextWatcher() {
 
             @Override
@@ -126,39 +123,25 @@ public class AddActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tv.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                EditText stv = findViewById(R.id.search_field);
-                testString[0] = stv.getText().toString() + "";
-                fixinator20000000(testString[0]);
-
+                if (s.length() == 0) {
+                    tv.setVisibility(View.GONE);
+                } else {
+                    tv.setText(stv.getText());
+                    testString = tv.getText().toString();
+                }
             }
         };
         stv.addTextChangedListener(watchDogs2);
-        if (please != null) {
-            return entryName.toLowerCase().startsWith(please.toLowerCase());
-        }
-        return false;
-    }
+        Log.i("please", testString + "");
 
-    public String fixinator20000000(String plea) {
-        if (plea != null) {
-            please = plea;
-        }
-        // Log.i("...",please);
-        return please;
-    }
 
-    public void onButtonPresser(View view) {
-        try {
-            updateEntries();
-//            Log.i("please5",fixinator20000000(null));
-            Log.i("Entries", "Updated");
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        return entryName.equalsIgnoreCase(testString + "");
+
     }
 
     public void descriptionOverlay() {                                                              //Method to start a new activity
@@ -170,7 +153,7 @@ public class AddActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         AddActivity.this.finish();                                                                  //When addActivity is put on pause it will finish its activity, which means the window will close
-                                                                                                    //So you do not get multiple AddActivity activities open at the same time
+        //So you do not get multiple AddActivity activities open at the same time
 
     }
 }
