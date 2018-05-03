@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -75,7 +76,8 @@ public class Home extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_home);                                                         //Sets the contentView to the layout of the activity_home xml file
-
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
     }
 
     @Override
