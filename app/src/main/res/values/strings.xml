@@ -9,4 +9,5 @@
     <string name="ExpirationMonth">mm</string>
     <string name="ExpirationYear">yyyy</string>
     <string name="search"></string>
+    <string name="search_title">"Search:"</string>
 </resources>
