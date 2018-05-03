@@ -72,6 +72,8 @@ public class GridAdapter extends BaseAdapter {
 
         holder.os_text = rowView.findViewById(R.id.os_texts);                                       //Initializes the "holder" variable with the corresponding View (TextView, ImageView)
         holder.os_img = rowView.findViewById(R.id.os_images);
+        holder.os_war = rowView.findViewById(R.id.os_warnings);
+
         holder.os_text.setText(result[position]);                                                   //Sets the text of the TextView "os_text" to the String at "position" in the "result" array
 
         holder.os_text.setTextSize(14);                                                             //Change the TextView text attributes (size, padding, etc.)
@@ -79,42 +81,41 @@ public class GridAdapter extends BaseAdapter {
         holder.os_text.setTypeface(null, Typeface.NORMAL);
         holder.os_text.setTextColor(Color.parseColor("#000000"));
 
-        holder.os_img.setImageResource(imageId[position]);                                          //Set image resource with the ID
+        holder.os_img.setImageResource(imageId[position]);                                          //Set image resource with the ID from the array
 
-        holder.os_war = rowView.findViewById(R.id.os_warnings);
-        holder.os_war.setImageResource(R.mipmap.exclamation_mark);
-        holder.os_war.setVisibility(View.INVISIBLE);
+        holder.os_war.setImageResource(R.mipmap.exclamation_mark);                                  //Set image resource with the ID from the array
+        holder.os_war.setVisibility(View.INVISIBLE);                                                //Set the image view invisible
 
 
-        if (imageWar != null) {
-            if (imageWar[position]) {
-                holder.os_war.setVisibility(View.VISIBLE);
+        if (imageWar != null) {                                                                     //if imageWar (boolean array) is not null (exists)
+            if (imageWar[position]) {                                                               //if the current boolean in the array at "position" is true
+                holder.os_war.setVisibility(View.VISIBLE);                                          //Sets the image view visible
             }
         }
 
         rowView.setOnClickListener(new OnClickListener() {
 
             @Override
-            public void onClick(View v) {
-                imageWar = null;
-                AddActivity.entry = result[position];
-                onClickE(result[position], imageId[position], position);
-                Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {                                                          //Make a click listener
+                imageWar = null;                                                                    //Set imageWar to null
+                AddActivity.entry = result[position];                                               //Set entry in AddActivity to the one from the array at position "position"
+                onClickE(result[position], imageId[position], position);                            //Run the method using, the name and id on the current "position", and the "position" as an integer
+                Toast.makeText(context, "You Clicked " + result[position], Toast.LENGTH_SHORT).show();  //Make a short toast, that tells the user what they clicked. Probably remove
             }
         });
 
-        return rowView;
+        return rowView;                                                                             //Return the rowView
     }
 
-    public void onClickE(String name, int imageId, int position) {
-        DescriptionOverlay.phName = name;
+    public void onClickE(String name, int imageId, int position) {                                  //Method that requires a name, id and position integer, returns nothing
+        DescriptionOverlay.phName = name;                                                           //Sets the DescriptionOverlay variables to the selected's values
         DescriptionOverlay.imageId = imageId;
         DescriptionOverlay.position = position;
         DescriptionOverlay.addOrEdit2 = addOrEdit;
-        if (addOrEdit == false) {
-            DescriptionOverlay.ph = (Entries) Home.myEntries.get(position);
+        if (addOrEdit == false) {                                                                   //If user is editing an existing entry
+            DescriptionOverlay.ph = (Entries) Home.myEntries.get(position);                         //Set the placeholder Entry in DescriptionOverlay to the Entry from the home page on the same "position"
         }
         Intent intent = new Intent(context, AddActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        context.startActivity(intent);                                                              //Start the AddActivity
     }
 }
