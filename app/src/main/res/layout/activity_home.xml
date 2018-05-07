@@ -6,19 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".Home">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <GridView
         android:id="@+id/gridViewHome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="4" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:numColumns="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintVertical_bias="0.037" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="383dp"
-        android:layout_height="wrap_content"
-        android:onClick="AddNewButtonPressed"
+        android:layout_width="192dp"
+        android:layout_height="50dp"
+        android:background="@mipmap/entry_bread"
+        android:onClick="addNewButtonPressed"
         android:text="@string/add_new"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/sortingSpiderMan"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/sortingSpiderMan"
+        android:layout_width="192dp"
+        android:layout_height="50dp"
+        android:textAlignment="center"
+        android:background="@mipmap/entry_bacon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/button" />
 </android.support.constraint.ConstraintLayout>
