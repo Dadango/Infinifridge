@@ -22,8 +22,8 @@
         </activity>
         <activity android:name=".AddActivity"
             android:parentActivityName=".Home"/>
+        <activity android:name=".KillAble"/>
         <activity android:name=".DescriptionOverlay"></activity>
-
 
     </application>
 
