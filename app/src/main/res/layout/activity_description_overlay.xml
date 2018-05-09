@@ -81,9 +81,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
 
+        android:ems="10"
         android:inputType="number"
+        android:maxLength="2"
         android:selectAllOnFocus="true"
         android:text="@string/ExpirationDay"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,6 +105,7 @@
         android:ems="10"
         android:inputType="number"
 
+        android:maxLength="2"
         android:selectAllOnFocus="true"
         android:text="@string/ExpirationMonth"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -124,6 +126,7 @@
         android:ems="10"
         android:inputType="number"
 
+        android:maxLength="4"
         android:selectAllOnFocus="true"
         android:text="@string/ExpirationYear"
         app:layout_constraintBottom_toBottomOf="parent"
